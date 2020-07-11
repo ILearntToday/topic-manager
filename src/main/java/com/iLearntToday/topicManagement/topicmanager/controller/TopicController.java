@@ -1,30 +1,56 @@
 package com.iLearntToday.topicManagement.topicmanager.controller;
 
+import com.iLearntToday.topicManagement.topicmanager.exception.ImproperTopicException;
 import com.iLearntToday.topicManagement.topicmanager.models.Topic;
 import com.iLearntToday.topicManagement.topicmanager.repository.TopicRepository;
 import com.iLearntToday.topicManagement.topicmanager.service.TopicManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.UUID;
 
 @RestController
+@RequestMapping("/topic")
 public class TopicController {
 
     @Autowired
     TopicManagerService topicManagerService;
-    @Autowired
-    TopicRepository topicRepository;
-    @RequestMapping(value="/test",method = RequestMethod.GET)
-    public String testArt(){
 
-        topicRepository.save(new Topic("122","wqw","wqwq"));
-        return topicRepository.findById("122").toString();
+
+    /*
+        API TO HANDLE FULL TOPIC DETAILS SAVE OPERATION
+    */
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public ResponseEntity<?> saveTopic(@RequestBody Topic topic) {
+
+        if (topicManagerService.saveTopic(topic)) {
+            return new ResponseEntity<String>("Topic successfully saved", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Could not topic ", HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
 
-    @RequestMapping(value="/", method = RequestMethod.GET)
+    /*
+      API TO SAVE LIST OF TOPICS
+     */
+    @RequestMapping(value="/save-all",method = RequestMethod.POST)
+    public ResponseEntity<?> saveAllTopic(@RequestBody List<Topic> topics){
+       if( topicManagerService.saveAllTopic(topics)){
+           return new ResponseEntity<String>("Topics successfully saved", HttpStatus.OK);
+       }
+        return new ResponseEntity<>("Could not topic ", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    @RequestMapping(value="/test",method=RequestMethod.GET)
     public String testApi(){
-        return "Server running ";
+        return "Topic service is working";
     }
+
 }
