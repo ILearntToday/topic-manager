@@ -1,6 +1,7 @@
 package com.iLearntToday.topicManagement.topicmanager.controller;
 
 import com.iLearntToday.topicManagement.topicmanager.exception.ImproperTopicException;
+import com.iLearntToday.topicManagement.topicmanager.models.ResponseVO;
 import com.iLearntToday.topicManagement.topicmanager.models.Topic;
 import com.iLearntToday.topicManagement.topicmanager.repository.TopicRepository;
 import com.iLearntToday.topicManagement.topicmanager.service.TopicManagerService;
@@ -41,15 +42,16 @@ public class TopicController {
     /*
       API TO SAVE LIST OF TOPICS
      */
-    @RequestMapping(value="/save-all",method = RequestMethod.POST)
-    public ResponseEntity<?> saveAllTopic(@RequestBody List<Topic> topics){
-       if( topicManagerService.saveAllTopic(topics)){
-           return new ResponseEntity<String>("Topics successfully saved", HttpStatus.OK);
-       }
-        return new ResponseEntity<>("Could not topic ", HttpStatus.INTERNAL_SERVER_ERROR);
+    @RequestMapping(value = "/save-all", method = RequestMethod.POST)
+    public ResponseEntity<?> saveAllTopic(@RequestBody List<Topic> topics) {
+        if (topicManagerService.saveAllTopic(topics)) {
+            return new ResponseEntity<>(new ResponseVO<String>("Topics successfully saved", HttpStatus.OK.value()), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new ResponseVO<String>("Could not topic ", HttpStatus.INTERNAL_SERVER_ERROR.value()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    @RequestMapping(value="/test",method=RequestMethod.GET)
-    public String testApi(){
+
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String testApi() {
         return "Topic service is working";
     }
 
