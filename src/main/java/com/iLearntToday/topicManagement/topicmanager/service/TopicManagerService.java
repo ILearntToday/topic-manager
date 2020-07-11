@@ -44,11 +44,7 @@ public class TopicManagerService {
 
     public boolean saveAllTopic(List<Topic> topics) {
         boolean isAllTopicsSaved = true;
-        for (Topic topic : topics) {
-            if (!saveTopic(topic)) {
-                isAllTopicsSaved = false;
-            }
-        }
+        topicRepository.saveAll(topics);
         return isAllTopicsSaved;
     }
 }
