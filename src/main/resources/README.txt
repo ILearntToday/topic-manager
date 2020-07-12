@@ -1,3 +1,3 @@
 1. docker command to pull mysql
 docker pull mysql
-docker run --name mysql-standalone -e MYSQL_ROOT_PASSWORD=dhiraj1212 -e MYSQL_DATABASE=topicdb -e MYSQL_PASSWORD=dhiraj1212 -d mysql:latest
+docker run -p 3307:3306 -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=topicdb -e MYSQL_USER=sa -e MYSQL_PASSWORD=password -d mysql:5.6
