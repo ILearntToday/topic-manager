@@ -87,7 +87,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<finalName>topic-manger-docker</finalName>
+					<finalName>topic-manager-docker</finalName>
 				</configuration>
 			</plugin>
 		</plugins>
